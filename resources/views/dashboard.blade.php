@@ -11,10 +11,10 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     @if (session()->has('status'))
                         <div style="color:#20a4e1;font-size:18px;font-weight:bold;margin:2rem">
-                            {{session('status')}}
-                        </div>    
+                            {{ session('status') }}
+                        </div>
                     @endif
-                    
+
                     <table class="table-auto">
                         <thead>
                             <tr>
@@ -29,19 +29,21 @@
                         <tbody>
                             <tr>
                                 @foreach ($posts as $post)
-                            <td class="border px-4 py-2">{{$post->user->name}}</td>
-                            <td class="border px-4 py-2">{{$post->user->email}}</td>
-                            <td class="border px-4 py-2">{{$post->author}}</td>
-                            <td class="border px-4 py-2">{{$post->title}}</td>
-                            <td class="border px-4 py-2">{{$post->description}}</td>
-                            <td class="border px-4 py-2 mx-4" style="width:15%">
-                                <a href="{{url('/post/edit',$post->id)}}" class="px-3" style="background-color:#20a4e1;color:white;margin-right:10px;padding:5px;border-radius:8px">Edit
-                                <a href="{{url('/post/delete',$post->id)}}" class="px-3" style="background-color:#dc143c;color:white;margin-right:10px;padding:5px;border-radius:8px">Delete
-                            </td>
-                          </tr>
-                        @endforeach
+                                    <td class="border px-4 py-2">{{ $post->user->name }}</td>
+                                    <td class="border px-4 py-2">{{ $post->user->email }}</td>
+                                    <td class="border px-4 py-2">{{ $post->author }}</td>
+                                    <td class="border px-4 py-2">{{ $post->title }}</td>
+                                    <td class="border px-4 py-2">{{ $post->description }}</td>
+                                    <td class="border px-4 py-2 mx-4" style="width:15%">
+                                        <a href="{{ url('/post/edit', $post->id) }}" class="px-3"
+                                            style="background-color:#20a4e1;color:white;margin-right:10px;padding:5px;border-radius:8px">Edit
+                                            <a href="{{ url('/post/delete', $post->id) }}" class="px-3"
+                                                style="background-color:#dc143c;color:white;margin-right:10px;padding:5px;border-radius:8px">Delete
+                                    </td>
+                            </tr>
+                            @endforeach
                         </tbody>
-                      </table>
+                    </table>
                 </div>
             </div>
         </div>

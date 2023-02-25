@@ -46,7 +46,7 @@ class PostController extends Controller
     }
 
     //show single products 
-    public function show(Request $request, $id)
+    public function show_post_api(Request $request, $id)
     {
         return Post::find($id);
     }
@@ -67,19 +67,21 @@ class PostController extends Controller
 
         return redirect(route('dashboard'))->with('status', 'Post Updated Successfully !!');
     }
-    public function update_post_api(Request $request,$id){
+    public function update_post_api(Request $request, $id)
+    {
         $post = Post::find($id);
         $post->update($request->all());
         $post->save();
         return $post;
     }
 
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         Post::destroy($id);
         return redirect(route('dashboard'))->with('status', 'Post Deleted Successfully !!');
     }
-    public function destroy_post_api(Request $request,$id){
-        return post::destroy($id);  
+    public function destroy_post_api(Request $request, $id)
+    {
+        return post::destroy($id);
     }
 }

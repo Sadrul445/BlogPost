@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 class AuthController extends Controller
@@ -54,8 +55,11 @@ class AuthController extends Controller
             ];
             return Response($response,201);
         }
-    public function logout(Request $request){
-
-    }
+        public function logout(Request $request){
+            auth()->user()->tokens()->delete(); 
+            return [
+                "message" => "Logged Out Succesfully"
+            ]; 
+        }
    
 }
