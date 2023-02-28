@@ -6,21 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('author_name');
-            $table->date('publication_date');
-            $table->string('p_image');
-            $table->text('description');
+            $table->string('image');
+            $table->string('newspaper_name');
+            $table->string('newspaper_url');
+            $table->string('newspaper_title');
+            $table->text('newspaper_description');
             $table->timestamps();
         });
     }
-
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('media');
     }
 };

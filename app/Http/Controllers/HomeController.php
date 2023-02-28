@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function show_post(){
+    public function show_post(Request $request){
         $posts = Post::paginate(3);
         return view('home',['posts'=>$posts]);
     }
