@@ -71,7 +71,7 @@ class PostController extends Controller
 
         //store the decoded image data in the "decoded_media_images" directory
         $decodedImagePath = 'decoded_image/' . time() . '.png';
-        Storage::disk('public')->put($decodedImagePath, $decodedImage); //put(filepath,filename)
+        Storage::disk('public')->put($decodedImagePath, $decodedImage); 
 
         $post = Post::create(
             [
