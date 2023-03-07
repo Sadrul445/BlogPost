@@ -4,16 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Media;
 use Illuminate\Http\Request;
-// use App\Http\Requests\MediaStoreRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
 
-    public function index_media(Request $request)
+    public function show_media(Request $request)
     {
-        return response()->json(Media::all(), 200);
+        $medias = Media::all();
+
+        foreach($medias as $media){
+
+            $decodedImagePath = $media->image;
+
+            $decodedImageData = Storage::disk('public')->get($decodedImagePath);
+            $encodedImageData = base64_encode($decodedImageData);
+
+            $media->encoded_image_data = $encodedImageData;
+        }
+        return response()->json($medias,200);
+    }
+    public function show_single_media(Request $request,$id){
+        $media = Media::find($id);
+        $decodedImagePath = $media->image;
+        $decodedImageData = Storage::disk('public')->get($decodedImagePath);
+        $encodedImageData = base64_encode($decodedImageData);
+        $media->encoded_image_data = $encodedImageData;
+        return response()->json($media,200);
     }
     public function store_media(Request $request)
     {
@@ -28,49 +46,36 @@ class MediaController extends Controller
                 'newspaper_description' => 'required',
             ]
         );
-        // Check if the file is present in the request
-        // if (!$request->hasFile('image')) {
-        //     return response()->json([
-        //         'message' => 'Image not found in request',
-        //         'status' => 'error',
-        //     ], 400);
-        // }
 
-        //decode the base64-encoded image data
+        //decode the base64-encoded image data 
         $decodedImage = base64_decode($request->input('image'));
-
         //store the decoded image data in the "decoded_media_images" directory
-        $imagePath = 'decoded_media_images/' . time() . '.png';
-        Storage::disk('public')->put($imagePath, $decodedImage);
+        $decodedImagePath = 'decoded_image/' . time() . '.png';
+        Storage::disk('public')->put($decodedImagePath, $decodedImage);
 
         //create_media
         $media = Media::create(
             [
                 'title' => $request->title,
-                'image' => $imagePath,
+                'image' => $decodedImagePath, //decode
                 'newspaper_name' => $request->newspaper_name,
                 'newspaper_url' => $request->newspaper_url,
                 'newspaper_title' => $request->newspaper_title,
                 'newspaper_description' => $request->newspaper_description
             ]
         );
+
         return response()->json([
             'message' => 'Image Uploaded',
-            'status' => 'success',
-            'media' => $media
+            'status' => 'Success',
+            'media' => $media,
         ], 200);
     }
-    public function show_single_media(Request $request, $id)
-    {
-        return response()->json(Media::findOrFail($id));
-    }
-    public function show_media(Request $request)
-    {
-        return response()->json(Media::all());
-    }
+
     public function update_media(Request $request, $id)
     {
         $media = Media::findOrFail($id);
+
         $media->title = $request->title;
 
         $updated_image_location = public_path("storage\\" . $media->image);

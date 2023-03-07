@@ -12,7 +12,7 @@ class Post extends Model
         'title',
         'author_name',
         'publication_date',
-        'p_image',
+        'image',
         'description',
         'user_id',
     ];

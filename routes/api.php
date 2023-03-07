@@ -16,7 +16,7 @@ Route::get('/media', [MediaController::class, 'show_media']); //completed
 Route::delete('/media/delete/{id}', [MediaController::class, 'delete_media']); //completed
 
 
-Route::get('/posts', [PostController::class, 'index_post_api']); //completed
+Route::get('/posts', [PostController::class, 'show_all_post_api']); //completed
 Route::get('/posts/{id}', [PostController::class, 'show_post_api']); //completed
 Route::delete('/posts/delete/{id}', [PostController::class, 'destroy_post_api']); //completed
 
@@ -26,9 +26,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']); //completed
     
     Route::post('/media', [MediaController::class, 'store_media']); //completed
+
     Route::post('/media/{id}', [MediaController::class, 'update_media']); //completed
     
     Route::post('/posts', [PostController::class, 'store']); //completed
+
     Route::post('/posts/{id}', [PostController::class,'update_post_api']); //completed
 });
 

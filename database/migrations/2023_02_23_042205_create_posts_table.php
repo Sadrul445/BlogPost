@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('author_name');
             $table->date('publication_date');
-            $table->string('p_image');
+            $table->string('image');
             $table->text('description');
             $table->timestamps();
         });
