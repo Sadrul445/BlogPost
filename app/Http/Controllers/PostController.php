@@ -89,8 +89,6 @@ class PostController extends Controller
             'post' => $post
         ], 200);
     }
-
- 
     public function edit(Request $request, $id)
     {
         $post = Post::find($id);
@@ -118,14 +116,14 @@ class PostController extends Controller
         $post->author_name = $request->author_name;
         $post->publication_date = $request->publication_date;
 
-        $destination = public_path("storage\\" . $post->p_image); //Store_image_file
+        $destination = public_path("storage\\" . $post->image); //Store_image_file
         if ($request->hasFile('new_image')) {
             if (File::exists($destination)) {
                 File::delete($destination);
             }
-            $p_image = $request->file('new_image')->store('updated_posts', 'public');
+            $image = $request->file('new_image')->store('updated_posts', 'public');
         } else {
-            $p_image = $request->p_image;
+            $image = $request->image;
         }
 
         $post->description = $request->description;

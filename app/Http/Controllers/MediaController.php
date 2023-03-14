@@ -16,9 +16,10 @@ class MediaController extends Controller
 
         foreach($medias as $media){
 
-            $decodedImagePath = $media->image;
+            $decodedImage = $media->image;
 
-            $decodedImageData = Storage::disk('public')->get($decodedImagePath);
+            $decodedImageData = Storage::disk('public')->get($decodedImage);
+            
             $encodedImageData = base64_encode($decodedImageData);
 
             $media->encoded_image_data = $encodedImageData;
@@ -27,8 +28,8 @@ class MediaController extends Controller
     }
     public function show_single_media(Request $request,$id){
         $media = Media::find($id);
-        $decodedImagePath = $media->image;
-        $decodedImageData = Storage::disk('public')->get($decodedImagePath);
+        $decodedImage = $media->image;
+        $decodedImageData = Storage::disk('public')->get($decodedImage);
         $encodedImageData = base64_encode($decodedImageData);
         $media->encoded_image_data = $encodedImageData;
         return response()->json($media,200);
@@ -64,11 +65,11 @@ class MediaController extends Controller
                 'newspaper_description' => $request->newspaper_description
             ]
         );
-
+        
         return response()->json([
-            'message' => 'Image Uploaded',
-            'status' => 'Success',
-            'media' => $media,
+                'message' => 'Image Uploaded',
+                'status' => 'Success',
+                'media' => $media,
         ], 200);
     }
 
